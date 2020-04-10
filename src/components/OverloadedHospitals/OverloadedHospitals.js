@@ -1,7 +1,12 @@
 import React from 'react';
 
-import { OverloadedHospitalsContainer } from './OverloadedHospitals.style';
+import {
+  OverloadedHospitalsContainer,
+  Filter,
+} from './OverloadedHospitals.style';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 function getHospitalizationData() {
   // this is a stub for now, will need to async from data.covidactnow.org
@@ -34,6 +39,25 @@ export default function OverloadedHospitals() {
   return (
     <OverloadedHospitalsContainer>
       <h1>Counties most at risk of hospital overload from COVID</h1>
+      <Filter>
+        <h4>Viewing</h4>
+        <ToggleButtonGroup
+          value="counties"
+          exclusive
+          // onChange={handleAlignment}
+          // aria-label="text alignment"
+        >
+          <ToggleButton value="counties" aria-label="counties">
+            Counties
+          </ToggleButton>
+          <ToggleButton value="states" aria-label="states">
+            States
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Filter>
+      <Filter>
+        <h4>Assuming stay at home compliance is</h4>
+      </Filter>
       <table>
         <tr>
           <th></th>

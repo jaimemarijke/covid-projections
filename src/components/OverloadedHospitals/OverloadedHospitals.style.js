@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 
 export const OverloadedHospitalsContainer = styled.div`
+  width: 850px;
+
   a {
     color: #3bbce6;
     text-decoration: none;
   }
 
   table {
-    width: 800px;
+    width: 100%;
+    clear: both;
     border: 1px solid #ccc;
     border-collapse: collapse;
 
@@ -33,5 +36,16 @@ export const OverloadedHospitalsContainer = styled.div`
         float: right;
       }
     }
+  }
+`;
+
+export const Filter = styled.div`
+  width: 50%;
+  height: 110px;
+  margin-bottom: 10px;
+  float: left;
+
+  h4 {
+    margin-top: 0;
   }
 `;
