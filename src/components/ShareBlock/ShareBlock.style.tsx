@@ -13,12 +13,8 @@ export const ShareSpacer = styled.div`
 export const ShareContainer = styled.div<{ condensed?: boolean }>`
   background: ${palette.white};
   max-width: 640px;
-  margin: ${props => (props.condensed ? 0 : '3rem auto')};
-  border: 1px solid ${palette.divider};
-  padding: 1.5rem;
-  border-radius: 4px;
-  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05),
-    0 1px 3px 0 rgba(63, 63, 68, 0.15);
+  margin: ${props => (props.condensed ? 0 : '1rem auto')};
+  padding: 0.5rem;
 `;
 
 export const ShareInstruction = styled(Typography)<{ component?: string }>`
@@ -34,7 +30,7 @@ export const ShareInstruction = styled(Typography)<{ component?: string }>`
 export const ShareButtonContainer = styled.div<{ reflow: boolean }>`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 0 -0.75rem;
 
   > div {

@@ -67,9 +67,9 @@ const ShareBlock = ({
 
   return (
     <ShareContainer condensed={condensed}>
-      <ShareInstruction>
+      {/* <ShareInstruction>
         {shareInstruction || 'Share the Covid Act Now map'}
-      </ShareInstruction>
+      </ShareInstruction> */}
       <ShareButtonContainer reflow>
         <StyledShareButton disableElevation variant="contained" color="#3b5998">
           <FacebookShareButton
@@ -122,13 +122,13 @@ const ShareBlock = ({
         )}
       </ShareButtonContainer>
 
-      <ShareTypeDivider />
+      {/* <ShareTypeDivider />
 
       <ShareInstruction color="inherit" component="p" variant="subtitle2">
         {newsletterInstruction ||
           'Get the latest updates from the Covid Act Now team'}
       </ShareInstruction>
-      <Newsletter county={countyName} location={location} />
+      <Newsletter county={countyName} location={location} /> */}
     </ShareContainer>
   );
 };
