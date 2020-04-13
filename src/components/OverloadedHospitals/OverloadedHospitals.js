@@ -10,17 +10,31 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 // import ToggleButton from '@material-ui/lab/ToggleButton';
 // import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
-export default function OverloadedHospitals() {
-  const counties = _.take(getHospitalizationData(), 10);
-  counties.forEach(county => {
-    county.lastUpdatedDate = moment(county.lastUpdatedDate);
-    county.projections.hospitalBeds.peakDate = moment(
-      county.projections.hospitalBeds.peakDate,
+export default class OverloadedHospitals extends React.Component {
+  constructor() {
+    super();
+    this.state = { numCounties: 10 };
+    this.counties = getHospitalizationData();
+    this.counties.forEach(county => {
+      // county.lastUpdatedDate = moment(county.lastUpdatedDate);
+      county.projections.hospitalBeds.peakDate = moment(
+        county.projections.hospitalBeds.peakDate,
+      );
+      county.projections.hospitalBeds.shortageStartDate = moment(
+        county.projections.hospitalBeds.shortageStartDate,
+      );
+    });
+    this.counties = _.sortBy(
+      this.counties,
+      'projections.hospitalBeds.shortageStartDate',
     );
-    county.projections.hospitalBeds.shortageStartDate = moment(
-      county.projections.hospitalBeds.shortageStartDate,
-    );
-  });
+  }
+
+  seeMore = e => {
+    this.setState({ numCounties: this.state.numCounties + 10 });
+    e.preventDefault();
+    return false;
+  };
 
   /*
   <Filter>
@@ -43,45 +57,52 @@ export default function OverloadedHospitals() {
     <h4>Assuming stay at home compliance is</h4>
   </Filter>
   */
-  return (
-    <OverloadedHospitalsContainer>
-      <h1>Counties most at risk of hospital overload from COVID</h1>
+  render() {
+    return (
+      <OverloadedHospitalsContainer>
+        <h1>Counties most at risk of hospital overload from COVID</h1>
 
-      <table>
-        <tr>
-          <th></th>
-          <th>County, State</th>
-          <th>Overload</th>
-          <th>Peak</th>
-          <th>Deaths</th>
-          <th></th>
-        </tr>
-        {counties.map(({ countyName, stateName, projections }, idx) => (
+        <table>
           <tr>
-            <td>{idx + 1}</td>
-            <td>
-              <strong>{countyName}</strong>
-              <br />
-              {stateName}
-            </td>
-            <td>
-              {projections.hospitalBeds.shortageStartDate.format('MMM D')}
-            </td>
-            <td>{projections.hospitalBeds.peakDate.format('MMM D')}</td>
-            <td>{projections.aggregateDeaths}</td>
-            <td>
-              <a href="#">
-                Details <NavigateNextIcon />
-              </a>
-            </td>
+            <th></th>
+            <th>County, State</th>
+            <th>Overload</th>
+            <th>Peak</th>
+            <th>Deaths</th>
+            <th></th>
           </tr>
-        ))}
-      </table>
-      <p>
-        Showing <strong>10 counties</strong> <a href="#">See more</a>
-      </p>
-    </OverloadedHospitalsContainer>
-  );
+          {_.take(this.counties, this.state.numCounties).map(
+            ({ countyName, stateName, projections }, idx) => (
+              <tr>
+                <td>{idx + 1}</td>
+                <td>
+                  <strong>{countyName}</strong>
+                  <br />
+                  {stateName}
+                </td>
+                <td>
+                  {projections.hospitalBeds.shortageStartDate.format('MMM D')}
+                </td>
+                <td>{projections.hospitalBeds.peakDate.format('MMM D')}</td>
+                <td>{projections.aggregateDeaths}</td>
+                <td>
+                  <a href="#">
+                    Details <NavigateNextIcon />
+                  </a>
+                </td>
+              </tr>
+            ),
+          )}
+        </table>
+        <p>
+          Showing <strong>{this.state.numCounties} counties</strong>{' '}
+          <a href="#" onClick={this.seeMore}>
+            See more
+          </a>
+        </p>
+      </OverloadedHospitalsContainer>
+    );
+  }
 }
 
 function getHospitalizationData() {
