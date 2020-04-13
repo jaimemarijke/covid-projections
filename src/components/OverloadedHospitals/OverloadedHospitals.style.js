@@ -37,6 +37,10 @@ export const OverloadedHospitalsContainer = styled.div`
       }
     }
   }
+
+  > p a {
+    margin-left: 15px;
+  }
 `;
 
 export const Filter = styled.div`
